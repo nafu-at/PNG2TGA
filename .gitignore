@@ -1,0 +1,10 @@
+
+.idea/
+
+.vs/
+
+bin/
+
+obj/
+
+*.snk

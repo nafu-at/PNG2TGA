@@ -1,0 +1,25 @@
+﻿<Window x:Class="PNG2TGA.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PNG2TGA"
+        mc:Ignorable="d"
+        Title="PNG2TGA" ResizeMode="NoResize" Height="185" Width="760">
+    <Grid Margin="1,1,1,1">
+        <StackPanel x:Name="ProgressBar">
+            <StackPanel Visibility="Visible" Orientation="Horizontal" Margin="0,10,0,0">
+                <Label x:Name="Label_Original" Content="変換する画像ファイル" Height="25" Width="109" Margin="10,0,5,0" VerticalAlignment="Center" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
+                <TextBox x:Name="Original_Path" Height="25" TextWrapping="Wrap" FontSize="14" VerticalAlignment="Center" Margin="5,0,10,0" MinWidth="500" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Drop="Original_Path_Drop" AllowDrop="True" PreviewDragOver="Original_Path_PreviewDragOver"/>
+                <Button x:Name="Original_Reference" Content="参照" Height="25" Width="70" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" HorizontalContentAlignment="Center" Click="Original_Reference_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label x:Name="Label_Convert" Content="保存する画像ファイル" Height="25" Width="109" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"/>
+                <TextBox x:Name="Convert_Path" Height="25" TextWrapping="Wrap" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="500" Margin="5,0,10,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Drop="Convert_Path_Drop" AllowDrop="True" PreviewDragOver="Convert_Path_PreviewDragOver"/>
+                <Button x:Name="Convert_reference" Content="参照" Height="25" Width="70" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Right" Click="Convert_reference_Click"/>
+            </StackPanel>
+            <ProgressBar x:Name="Convert_Progress" Height="20" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="700"/>
+            <Button x:Name="Convert" Content="変換" Height="29" Width="91" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,10" Click="Convert_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
