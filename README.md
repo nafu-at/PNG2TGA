@@ -23,6 +23,12 @@ PNG2TGA.exeをダブルクリックすることで起動することができま
 パス入力欄にファイルをドラッグ・アンド・ドロップすることで指定できるようになりました。  
 同時にフォルダを指定することでフォルダの中身を全て処理できるようになりました。
 
+**v1.0.0.2 追加機能**
+
+You can now use it in command line:
+`PNG2TGA.exe INPUT OUTPUT`
+Both *INPUT* and *OUTPUT* can be file or folder(must ends with '\\').
+
 ## 動作要項
 
 - .NET Framework 4.5

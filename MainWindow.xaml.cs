@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
@@ -39,7 +40,30 @@ namespace PNG2TGA
 
         public MainWindow()
         {
-            InitializeComponent();
+            string[] args = Environment.GetCommandLineArgs();
+
+            if (args.Length > 1)
+            {
+                // <this-program> input output
+                string input = args[1];
+                string output = args.Length > 2 ? args[2] : input;
+                Console.WriteLine("input = " + input);
+                Console.WriteLine("output = " + output);
+                // convert files ...
+                string[] files = CheckDirectory(input) ?
+                    Directory.GetFiles(input, "*.png", SearchOption.AllDirectories) : new string[] { input };
+                foreach (string file in files)
+                {
+                    Console.Write("Converting " + file + "...");
+                    Convert_One(file, output);
+                    Console.WriteLine("done");
+                }
+                Environment.Exit(0);
+            }
+            else
+            {
+                InitializeComponent();
+            }
         }
 
         private void Original_Reference_Click(object sender, RoutedEventArgs e)
@@ -65,6 +89,23 @@ namespace PNG2TGA
             }
         }
 
+        private void Convert_One(string from, string to)
+        {
+            string openPath;
+            string savePath;
+            openPath = from;
+            savePath = to.EndsWith("\\")
+                ? to + Path.ChangeExtension(Path.GetFileName(from), ".tga")
+                : Path.ChangeExtension(to, ".tga");
+
+            Bitmap original = new Bitmap(openPath);
+            Bitmap clone = new Bitmap(original);
+            Bitmap newbmp = clone.Clone(new Rectangle(0, 0, clone.Width, clone.Height),
+                PixelFormat.Format32bppArgb);
+            TGA tga = (TGA)newbmp;
+            tga.Save(savePath);
+        }
+
         private void Convert_Click(object sender, RoutedEventArgs e)
         {
             string[] files;
@@ -74,20 +115,7 @@ namespace PNG2TGA
             double progress = Convert_Progress.Value = 0;
             foreach (string file in files)
             {
-                string openPath;
-                string savePath;
-                openPath = file;
-                savePath = ConvertPath.EndsWith("\\")
-                    ? ConvertPath + Path.ChangeExtension(Path.GetFileName(file), ".tga")
-                    : Path.ChangeExtension(ConvertPath, ".tga");
-                
-                Bitmap original = new Bitmap(openPath);
-                Bitmap clone = new Bitmap(original);
-                Bitmap newbmp = clone.Clone(new Rectangle(0, 0, clone.Width, clone.Height),
-                    PixelFormat.Format32bppArgb);
-                TGA tga = (TGA)newbmp;
-                tga.Save(savePath);
-                
+                Convert_One(file, ConvertPath);
                 progress += 1;
                 Convert_Progress.Value = progress;
             }
