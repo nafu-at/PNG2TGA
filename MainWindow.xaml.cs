@@ -25,7 +25,7 @@ namespace PNG2TGA
             get => Original_Path.Text;
             set => Original_Path.Text = value;
         }
-        
+
         public string ConvertPath
         {
             get => Convert_Path.Text;
@@ -68,15 +68,17 @@ namespace PNG2TGA
 
         private void Original_Reference_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new OpenFileDialog();
-            dialog.Filter = "PNGファイル (*.png)|*.png";
+            var dialog = new OpenFileDialog
+            {
+                Filter = "PNGファイル (*.png)|*.png"
+            };
+
             if (dialog.ShowDialog() == true)
             {
                 OriginalPath = dialog.FileName;
+                if (ConvertPath.Length != 0) return;
+                ConvertPath = CheckDirectory(dialog.FileName) ? dialog.FileName : Path.ChangeExtension(dialog.FileName, "tga");
             }
-
-            if (ConvertPath.Length != 0) return;
-            ConvertPath = CheckDirectory(dialog.FileName) ? dialog.FileName : Path.ChangeExtension(dialog.FileName, "tga");
         }
 
         private void Convert_reference_Click(object sender, RoutedEventArgs e)
@@ -109,8 +111,8 @@ namespace PNG2TGA
         private void Convert_Click(object sender, RoutedEventArgs e)
         {
             string[] files;
-            files = CheckDirectory(OriginalPath) ? 
-                Directory.GetFiles(OriginalPath, "*.png", SearchOption.AllDirectories) : new string[] {OriginalPath};
+            files = CheckDirectory(OriginalPath) ?
+                Directory.GetFiles(OriginalPath, "*.png", SearchOption.AllDirectories) : new string[] { OriginalPath };
             ConvertProgressMax = files.Length;
             double progress = Convert_Progress.Value = 0;
             foreach (string file in files)
@@ -127,7 +129,7 @@ namespace PNG2TGA
         {
             return (File.GetAttributes(path).HasFlag(FileAttributes.Directory));
         }
-        
+
         private void Original_Path_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
         {
             e.Effects = DragDropEffects.Copy;
@@ -150,7 +152,7 @@ namespace PNG2TGA
             if (ConvertPath.Length != 0) return;
             ConvertPath = CheckDirectory(OriginalPath) ? OriginalPath : Path.ChangeExtension(drop[0], "tga");
         }
-        
+
 
         private void Convert_Path_Drop(object sender, System.Windows.DragEventArgs e)
         {
